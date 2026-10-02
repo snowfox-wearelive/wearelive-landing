@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<body>
+<!--/* Presentational section fragments. They render whatever LandingContent they are given and hold no audience copy. */-->
+
+<!--/* Phones positioned as in Figma, inside a fluid aspect-locked box. */-->
+<div th:fragment="collage(c)" class="phone-collage" th:style="${c.style()}">
+  <div th:each="p : ${c.phones()}" class="phone-collage__box" th:style="${c.boxStyle(p)}">
+    <div class="phone-collage__phone" th:style="${p.innerStyle()}">
+      <img th:if="${p.isShot()}" class="phone-shot" th:src="@{${p.src()}}" th:alt="${p.alt()}"
+           th:attr="loading=${c.loading()}" decoding="async">
+      <div th:unless="${p.isShot()}" class="phone-mockup" th:attr="aria-hidden=${p.hasScreen() ? null : 'true'}">
+        <div class="phone-mockup__screen">
+          <img th:if="${p.hasScreen()}" th:src="@{${p.src()}}" th:alt="${p.alt()}"
+               th:attr="loading=${c.loading()}" decoding="async">
+        </div>
+        <span class="phone-mockup__island"></span>
+        <span class="phone-mockup__btn phone-mockup__btn--r"></span>
+        <span class="phone-mockup__btn phone-mockup__btn--l"></span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<section th:fragment="hero(page)" class="hero">
+  <div class="hero__inner">
+    <div class="hero__copy">
+      <div class="hero__eyebrow">
+        <span class="pill pill--solid">NEW</span>
+        <span th:text="${page.hero().eyebrow()}">밴드 올인원 앱</span>
+      </div>
+      <h1 class="hero__title">
+        <span th:each="line : ${page.hero().title()}" th:text="${line}"></span>
+      </h1>
+      <p class="hero__desc">
+        <span th:each="line : ${page.hero().description()}" th:text="${line}"></span>
+      </p>
+      <button type="button" class="red-button red-button--md" data-reserve-open th:text="${page.hero().cta()}">사전예약하기</button>
+    </div>
+    <div class="hero__visual">
+      <div th:replace="~{fragments/sections :: collage(${page.heroVisual()})}"></div>
+    </div>
+  </div>
+</section>
+
+<!--/* Pill switch between the two audience pages. Each tab is a real link to a separate route. */-->
+<nav th:fragment="audience-switch(active)" class="audience-switch" aria-label="대상 선택">
+  <span th:if="${active == 'band'}" class="audience-switch__tab is-active" aria-current="page">밴드 멤버라면</span>
+  <a th:unless="${active == 'band'}" th:href="@{${routes.band()}}" class="audience-switch__tab">밴드 멤버라면</a>
+  <span th:if="${active == 'owner'}" class="audience-switch__tab is-active" aria-current="page">대관 사장님이라면</span>
+  <a th:unless="${active == 'owner'}" th:href="@{${routes.owner()}}" class="audience-switch__tab">대관 사장님이라면</a>
+</nav>
+
+<div th:fragment="panel(panel)" class="panel-hero">
+  <h2 class="panel-hero__title">
+    <span th:each="line : ${panel.title()}" th:text="${line}"></span>
+  </h2>
+  <p class="panel-hero__desc">
+    <span th:each="line : ${panel.description()}" th:text="${line}"></span>
+  </p>
+</div>
+
+<div th:fragment="section-head(title)" class="section-head">
+  <span class="pill pill--solid" th:text="${title.label()}">LABEL</span>
+  <h2 class="section-head__title"><th:block th:text="${title.lead()}"/><em th:if="${title.emphasis() != null}" th:text="${title.emphasis()}"></em></h2>
+</div>
+
+<ol th:fragment="problem-grid(items)" class="problem-grid">
+  <li th:each="item, stat : ${items}" class="problem-card">
+    <span class="problem-card__num" th:text="${#numbers.formatInteger(stat.count, 2)}">01</span>
+    <h3 class="problem-card__title" th:text="${item.title()}"></h3>
+    <p class="problem-card__body">
+      <span th:each="line : ${item.body()}" th:text="${line}"></span>
+    </p>
+  </li>
+</ol>
+
+<div th:fragment="solution-row(row)" th:class="${row.rowClass()}">
+  <div class="solution-row__text">
+    <div class="solution-intro">
+      <span class="pill pill--tint" th:text="${row.copy().tag()}"></span>
+      <h3 class="solution-intro__title" th:text="${row.copy().title()}"></h3>
+      <p class="solution-intro__desc">
+        <span th:each="line : ${row.copy().description()}" th:text="${line}"></span>
+      </p>
+    </div>
+    <ul th:unless="${row.features().isEmpty()}" class="feature-list">
+      <li th:each="f : ${row.features()}" class="feature-list__item">
+        <span class="feature-list__title">
+          <img th:src="@{/assets/shared/bullet-dot.svg}" alt="" width="7" height="7">
+          <th:block th:text="${f.title()}"/>
+        </span>
+        <span class="feature-list__body" th:text="${f.body()}"></span>
+      </li>
+    </ul>
+  </div>
+  <div class="solution-row__visual">
+    <div th:replace="~{fragments/sections :: collage(${row.visual()})}"></div>
+  </div>
+</div>
+
+<!--/* Native <details> accordion; the shared name makes it one-open-at-a-time where supported. */-->
+<section th:fragment="faq(items)" class="faq" id="faq">
+  <div class="faq__inner">
+    <div class="faq__head">
+      <span class="pill pill--solid">FAQ</span>
+      <h2 class="faq__title">출시 전에 많이 묻는 질문.</h2>
+    </div>
+    <ul class="faq__list">
+      <li th:each="item : ${items}">
+        <details class="faq-item" name="faq">
+          <summary class="faq-item__q">
+            <span th:text="${item.question()}"></span>
+            <span class="faq-item__icon" aria-hidden="true">＋</span>
+          </summary>
+          <div class="faq-item__a"><p th:text="${item.answer()}"></p></div>
+        </details>
+      </li>
+    </ul>
+  </div>
+</section>
+
+<section th:fragment="final-cta(visual)" class="final-cta">
+  <p class="final-cta__kicker">FIRST STAGE STARTS HERE</p>
+  <h2 class="final-cta__title">
+    <span>당신의 다음 무대가</span>
+    <span>여기서 시작됩니다.</span>
+  </h2>
+  <p class="final-cta__sub">가장 먼저 위올라이브를 만나보세요.</p>
+  <div class="final-cta__visual">
+    <div th:replace="~{fragments/sections :: collage(${visual})}"></div>
+  </div>
+  <button type="button" class="red-button red-button--md" data-reserve-open>무료 사전예약</button>
+</section>
+
+</body>
+</html>

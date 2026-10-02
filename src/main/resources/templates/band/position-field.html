@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<body>
+<!--/* Figma 03 — band-only field: main position. Values are the Position enum names. */-->
+<fieldset th:fragment="field" class="pre-modal__group">
+  <legend class="pre-modal__label">주로 맡는 포지션</legend>
+  <div class="choice-row choice-row--wrap">
+    <label th:each="p : ${positions}" class="choice-radio">
+      <input type="radio" name="position" th:value="${p.name()}" th:checked="${p == defaultPosition}">
+      <span class="choice" th:text="${p.label}">보컬</span>
+    </label>
+  </div>
+</fieldset>
+</body>
+</html>

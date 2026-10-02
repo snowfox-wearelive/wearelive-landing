@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<!--/* Figma "02 랜딩 – 사장님 탭" (node 102:952) — rental venue owner landing page. */-->
+<head>
+  <th:block th:replace="~{fragments/layout :: head-common}"/>
+  <title th:text="${page.title()}">WEARELIVE</title>
+  <meta name="description" th:content="${page.description()}">
+  <link rel="stylesheet" th:href="@{/css/owner.css}">
+</head>
+<body class="landing landing--owner">
+<header th:replace="~{fragments/layout :: header(${routes.owner()})}"></header>
+
+<main>
+  <section th:replace="~{fragments/sections :: hero(${page})}"></section>
+
+  <section class="audience" th:aria-label="${page.audienceLabel()}">
+    <nav th:replace="~{fragments/sections :: audience-switch('owner')}"></nav>
+    <div th:replace="~{fragments/sections :: panel(${page.panel()})}"></div>
+
+    <div th:replace="~{fragments/sections :: section-head(${page.problemTitle()})}"></div>
+    <ol th:replace="~{fragments/sections :: problem-grid(${page.problems()})}"></ol>
+
+    <div th:replace="~{fragments/sections :: section-head(${page.solutionTitle()})}"></div>
+    <div class="solution-rows">
+      <th:block th:each="row : ${page.solutions()}">
+        <div th:replace="~{fragments/sections :: solution-row(${row})}"></div>
+      </th:block>
+    </div>
+  </section>
+
+  <section th:replace="~{fragments/sections :: faq(${page.faq()})}"></section>
+  <section th:replace="~{fragments/sections :: final-cta(${page.ctaVisual()})}"></section>
+</main>
+
+<footer th:replace="~{fragments/layout :: footer}"></footer>
+<th:block th:replace="~{fragments/layout :: overlays}"/>
+<dialog th:replace="~{fragments/modal :: modal('owner', ${apiEndpoint}, ~{})}"></dialog>
+</body>
+</html>
