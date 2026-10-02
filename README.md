@@ -34,5 +34,3 @@ Spring Boot 4.1 · Java 25 · Thymeleaf · JPA(H2). Figma: `WEARELIVE-사전예�
 - FAQ 답변은 초안 — `BandLandingContent` / `OwnerLandingContent`에서 교체
 - 푸터 SNS·문의·약관 링크(`templates/fragments/layout.html`)
 - 운영 DB 설정(`spring.datasource.*`)
-
-이전 React 구현은 `legacy-react/`에 보관되어 있습니다(원본 Figma PNG: `legacy-react/assets-src/`).
