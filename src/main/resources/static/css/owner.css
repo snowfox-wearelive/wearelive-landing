@@ -1,9 +1,0 @@
-/* Owner page only: row insets from the Figma frame. */
-@media (min-width: 1025px) {
-  .owner-row--list {
-    padding-inline: 10px 44px;
-  }
-  .owner-row--chat {
-    padding-inline: 44px 10px;
-  }
-}

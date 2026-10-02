@@ -4,7 +4,7 @@ package band.wearelive.landing.common.content;
  * A phone placed inside a {@link PhoneCollage}, using the coordinates from the Figma frame.
  *
  * @param kind   SHOT: exported screenshot that already includes the device frame;
- *               MOCKUP: CSS-drawn "Phone Mockup" component with an optional screen image ({@code src} may be null)
+ *               MOCKUP: CSS-drawn "Phone Mockup" component showing {@code src} as its screen
  * @param x      bounding box of the (possibly rotated) phone, in design px
  * @param innerW un-rotated phone size, in design px
  */
@@ -29,10 +29,6 @@ public record Phone(Kind kind, String src, String alt, double x, double y, doubl
 
     public boolean isShot() {
         return kind == Kind.SHOT;
-    }
-
-    public boolean hasScreen() {
-        return src != null;
     }
 
     public String innerStyle() {

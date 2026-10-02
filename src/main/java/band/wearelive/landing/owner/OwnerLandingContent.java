@@ -1,8 +1,5 @@
 package band.wearelive.landing.owner;
 
-import static band.wearelive.landing.common.content.SolutionRow.VisualSide.LEFT;
-import static band.wearelive.landing.common.content.SolutionRow.VisualSide.RIGHT;
-
 import band.wearelive.landing.common.content.FaqItem;
 import band.wearelive.landing.common.content.FeatureItem;
 import band.wearelive.landing.common.content.HeroCopy;
@@ -24,11 +21,6 @@ final class OwnerLandingContent {
 
     private static String img(String name) {
         return "/assets/owner/" + name + ".webp";
-    }
-
-    /** Tilted empty phone used in the solution rows — the design leaves the screen blank for now. */
-    private static PhoneCollage blankPhone() {
-        return PhoneCollage.of(346.7, 602.03, Phone.mockup(null, "", 0, 0, 346.7, 602.03, 270, 570, 8));
     }
 
     static LandingContent create() {
@@ -59,22 +51,19 @@ final class OwnerLandingContent {
                                 List.of("전화와 DM으로 오는 문의, 일정 조율, 입금 확인까지 —", "대관 하나에 손이 너무 많이 갑니다."))),
                 SectionTitle.emphasized("SOLUTION", "등록만 해두세요, ", "밴드가 찾아옵니다"),
                 List.of(
-                        SolutionRow.of(
+                        // The design's solution rows only had blank phone placeholders, so they are text-only.
+                        SolutionRow.textOnly(
                                 new SolutionCopy("01 · LIST", "공간 등록과 노출", List.of(
                                         "공연장·합주실 정보와 대관 가능 시간대를 올려두면, 무대를 찾는 대학 밴드에게 바로 노출됩니다.",
                                         "별도 광고 없이 공간이 홍보되고, 예약 신청부터 결제까지 앱 안에서 끝납니다.")),
                                 List.of(
                                         new FeatureItem("일정·예약 관리", "대관 신청과 확정, 시간대 관리를 한 화면에서. 전화 응대 없이 예약이 정리됩니다."),
-                                        new FeatureItem("빈 시간대 채우기", "비는 날짜를 열어두면 공연·합주 수요가 자동으로 연결됩니다.")),
-                                RIGHT,
-                                blankPhone()).withCssClass("owner-row--list"),
-                        SolutionRow.of(
+                                        new FeatureItem("빈 시간대 채우기", "비는 날짜를 열어두면 공연·합주 수요가 자동으로 연결됩니다."))),
+                        SolutionRow.textOnly(
                                 new SolutionCopy("02 · CHAT", "예약한 밴드와 채팅으로 소통", List.of(
                                         "예약이 잡히면 밴드와 앱 안에서 바로 대화할 수 있습니다.",
                                         "장비 목록, 입장 시간, 무대 세팅 같은 조율도 전화 없이 채팅으로 간편하게 끝내세요.")),
-                                List.of(),
-                                LEFT,
-                                blankPhone()).withCssClass("owner-row--chat")),
+                                List.of())),
                 faq(),
                 PhoneCollage.of(660, 700,
                         Phone.mockup(img("screen-login"), "위올라이브 로그인 화면", 20, 13.64, 427.584, 673.393, 295, 623, -13),

@@ -32,9 +32,6 @@ build/
 ### VS Code ###
 .vscode/
 
-### Local H2 database ###
-data/
-
 ### Previous React implementation build output ###
 legacy-react/node_modules/
 legacy-react/dist/

@@ -16,11 +16,12 @@
 </head>
 <body>
 
+<!--/* Pre-registration buttons link to ${preRegistrationUrl}: each page's controller supplies its own audience's form. */-->
 <header th:fragment="header(home)" class="site-header">
   <a th:href="@{${home}}" class="site-header__logo" aria-label="WEARELIVE 홈">
     <img th:src="@{/assets/shared/logo.svg}" alt="WEARELIVE" width="107" height="28">
   </a>
-  <button type="button" class="red-button red-button--sm" data-reserve-open>사전예약</button>
+  <a class="red-button red-button--sm" th:href="${preRegistrationUrl}">사전예약</a>
 </header>
 
 <footer th:fragment="footer" class="site-footer">
@@ -54,18 +55,10 @@
   </div>
 </footer>
 
-<th:block th:fragment="overlays">
-  <button type="button" class="top-button" data-top-button aria-label="맨 위로" tabindex="-1">
-    <span class="top-button__arrow" aria-hidden="true">↑</span>
-    <span class="top-button__label" aria-hidden="true">TOP</span>
-  </button>
-  <div class="toast-region" role="status" aria-live="polite">
-    <button type="button" class="toast" data-toast hidden>
-      <strong>사전예약이 완료되었습니다.</strong>
-      <span>출시 소식을 가장 먼저 보내드릴게요.</span>
-    </button>
-  </div>
-</th:block>
+<button th:fragment="top-button" type="button" class="top-button" data-top-button aria-label="맨 위로" tabindex="-1">
+  <span class="top-button__arrow" aria-hidden="true">↑</span>
+  <span class="top-button__label" aria-hidden="true">TOP</span>
+</button>
 
 </body>
 </html>

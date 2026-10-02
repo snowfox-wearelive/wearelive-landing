@@ -9,9 +9,9 @@
     <div class="phone-collage__phone" th:style="${p.innerStyle()}">
       <img th:if="${p.isShot()}" class="phone-shot" th:src="@{${p.src()}}" th:alt="${p.alt()}"
            th:attr="loading=${c.loading()}" decoding="async">
-      <div th:unless="${p.isShot()}" class="phone-mockup" th:attr="aria-hidden=${p.hasScreen() ? null : 'true'}">
+      <div th:unless="${p.isShot()}" class="phone-mockup">
         <div class="phone-mockup__screen">
-          <img th:if="${p.hasScreen()}" th:src="@{${p.src()}}" th:alt="${p.alt()}"
+          <img th:src="@{${p.src()}}" th:alt="${p.alt()}"
                th:attr="loading=${c.loading()}" decoding="async">
         </div>
         <span class="phone-mockup__island"></span>
@@ -35,7 +35,7 @@
       <p class="hero__desc">
         <span th:each="line : ${page.hero().description()}" th:text="${line}"></span>
       </p>
-      <button type="button" class="red-button red-button--md" data-reserve-open th:text="${page.hero().cta()}">사전예약하기</button>
+      <a class="red-button red-button--md" th:href="${preRegistrationUrl}" th:text="${page.hero().cta()}">사전예약하기</a>
     </div>
     <div class="hero__visual">
       <div th:replace="~{fragments/sections :: collage(${page.heroVisual()})}"></div>
@@ -94,7 +94,7 @@
       </li>
     </ul>
   </div>
-  <div class="solution-row__visual">
+  <div th:if="${row.hasVisual()}" class="solution-row__visual">
     <div th:replace="~{fragments/sections :: collage(${row.visual()})}"></div>
   </div>
 </div>
@@ -130,7 +130,7 @@
   <div class="final-cta__visual">
     <div th:replace="~{fragments/sections :: collage(${visual})}"></div>
   </div>
-  <button type="button" class="red-button red-button--md" data-reserve-open>무료 사전예약</button>
+  <a class="red-button red-button--md" th:href="${preRegistrationUrl}">무료 사전예약</a>
 </section>
 
 </body>
